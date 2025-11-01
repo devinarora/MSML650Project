@@ -78,9 +78,12 @@ export class Feed implements AfterViewInit {
   }
 
   async onPostSubmit() {
+    if (!this.postText) {
+      return;
+    }
     console.log(this.postText);
     const postID = uuidv4();
-    this.createFeedHTML(uuidv4(), this.postText);
+    this.createFeedHTML(postID, this.postText);
 
     // try {
     //   // Need to connect to AWS API Gateway
@@ -109,6 +112,7 @@ export class Feed implements AfterViewInit {
     // } catch (error) {
     //   console.log('error!');
     // }
+    this.postText = '';
   }
 
   async deletePost(postId: string) {
