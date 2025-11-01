@@ -1,0 +1,5 @@
+<div>
+  <input type="text" [(ngModel)]="postText" name="postText" placeholder="Type your post here" />
+  <button type="button" (click)="onPostSubmit()">Post</button>
+  <ng-container #feed></ng-container>
+</div>
