@@ -176,7 +176,27 @@
 </style>
 
 <main class="main">
-  <app-feed></app-feed>
+  <div style="position:absolute; top:12px; right:12px; display:flex; gap:8px; align-items:center;">
+    <span *ngIf="isAuthed(); else loggedOut">Hi {{ username() }}</span>
+    <button *ngIf="isAuthed()" (click)="logout()">Logout</button>
+  </div>
+
+  <!-- Only show the feed when logged in -->
+  <app-feed *ngIf="isAuthed(); else needLogin"></app-feed>
 </main>
+
+<ng-template #needLogin>
+  <div style="text-align:center; width:100%;">
+    <h1>Welcome</h1>
+    <p>Please sign in to create and manage posts.</p>
+    <div style="margin-top:16px;">
+      <button (click)="login()">Login</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loggedOut>
+  <button (click)="login()">Login</button>
+</ng-template>
 
 <router-outlet />
