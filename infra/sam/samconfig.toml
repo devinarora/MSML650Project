@@ -1,0 +1,14 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "blog-dev"
+resolve_s3 = true
+s3_prefix = "blog-dev"
+profile = "blog-dev"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "UserPoolId=\"us-east-2_gbq4DlI0c\""
+image_repositories = []
+
+[default.global.parameters]
+region = "us-east-2"
