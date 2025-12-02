@@ -1,0 +1,28 @@
+
+:root{--bg:#0b1020;--panel:#121a35;--muted:#1a2447;--text:#e7ecff;--sub:#9fb0ff;--accent:#7aa2ff;--accent-2:#5fe1a1;--danger:#ff6b6b}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b1020, #0b1020 40%, #0c1530);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Inter,Helvetica,Arial}
+.container{max-width:1100px;margin:96px auto 64px;padding:0 20px}
+.topbar{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;background:#0b1020cc;backdrop-filter:blur(6px);border-bottom:1px solid #1b254a;padding:14px 20px;z-index:20}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.2px}
+.logo{font-size:22px}
+.nav .btn{margin-left:10px}
+.card{background:var(--panel);border:1px solid #223062;border-radius:16px;padding:18px;margin:18px 0;box-shadow:0 6px 18px #0007}
+.card h2{margin:6px 0 14px 0}
+.muted{background:var(--muted);border-color:#2a3a77}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.grid label{display:flex;flex-direction:column;gap:6px}
+label{display:flex;flex-direction:column;gap:6px;margin:6px 0}
+input,select,textarea{background:#0e1630;border:1px solid #2a3a77;border-radius:12px;color:var(--text);padding:10px 12px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.btn{border:1px solid #33467a;border-radius:999px;padding:8px 14px;background:#121c3a;color:var(--text);cursor:pointer;transition:transform .02s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,#3b6bff,#7aa2ff);border:0;color:white}
+.btn.danger{background:#3b1320;border-color:#892241;color:#ffd9e0}
+.btn.btn-ghost{background:transparent}
+.actions{display:flex;gap:10px;margin-top:10px}
+.table{width:100%;border-spacing:0;border-collapse:separate}
+.table th,.table td{padding:10px;border-bottom:1px solid #223062}
+.table tr:hover td{background:#0e163099}
+.footer{opacity:.7;text-align:center;margin:24px 0}
+#status{display:flex;gap:8px;align-items:center}
+@media (max-width: 800px){.grid{grid-template-columns:1fr} .topbar{flex-wrap:wrap;gap:8px} .container{margin-top:120px}}

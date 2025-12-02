@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cloud 650 – Blog Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>☁️</text></svg>">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">☁️</span>
+        <span>Cloud 650 Admin</span>
+      </div>
+      <nav class="nav">
+        <button id="loginBtn" class="btn">Login</button>
+        <button id="logoutBtn" class="btn btn-ghost">Logout</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section id="status" class="card muted">
+        <strong>Status:</strong> <span id="statusText">Checking session…</span>
+      </section>
+
+      <section class="card">
+        <h2>Create / Edit Post</h2>
+        <form id="postForm">
+          <input type="hidden" id="postId" />
+          <div class="grid">
+            <label>Title
+              <input id="title" required maxlength="140" />
+            </label>
+            <label>Slug
+              <input id="slug" required pattern="[a-z0-9]+" title="lowercase letters, numbers, hyphens" />
+            </label>
+          </div>
+          <label>Tags (comma separated)
+            <input id="tags" placeholder="aws, serverless" />
+          </label>
+          <label>Status
+            <select id="statusSel">
+              <option value="draft">draft</option>
+              <option value="published">published</option>
+            </select>
+          </label>
+          <label>Content
+            <textarea id="content" rows="8" placeholder="Write something awesome…"></textarea>
+          </label>
+          <div class="grid">
+            <label>Hero image
+              <input type="file" id="heroFile" accept="image/*" />
+            </label>
+            <input type="text" id="heroImageKey" placeholder="hero image key (auto-filled)" readonly />
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" id="saveBtn">Save</button>
+            <button type="button" class="btn danger" id="deleteBtn">Delete</button>
+            <button type="reset" class="btn btn-ghost" id="resetBtn">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Posts</h2>
+        <div id="filters" class="grid">
+          <label>Author
+            <input id="fAuthor" placeholder="me by default" />
+          </label>
+          <label>Tag
+            <input id="fTag" placeholder="optional tag filter" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="refreshBtn" class="btn">Refresh</button>
+        </div>
+        <table class="table" id="postsTable">
+          <thead>
+            <tr><th>Title</th><th>Status</th><th>Created</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="postsBody"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>Built for Cloud 650 • Serverless on AWS</small>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
