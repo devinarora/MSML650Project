@@ -27,7 +27,7 @@
       <section class="card">
         <h2>Create / Edit Post</h2>
         <form id="postForm">
-          <input type="hidden" id="postId" />
+          <input style="display: none" id="postId" />
           <div class="grid">
             <label>Title
               <input id="title" required maxlength="140" />
@@ -72,10 +72,10 @@
             <input id="fTag" placeholder="optional tag filter" />
           </label>
         </div>
-        <div class="actions">
+        <div class="btn-group pull-left">
           <button id="refreshBtn" class="btn">Refresh</button>
-          <button id="myPostsBtn" class="btn">My Posts</button>
-          <button id="allPostsBtn" class="btn">All Posts</button>
+          <button id="myPostsBtn" class="btn primary">My Posts</button>
+          <button id="allPostsBtn" class="btn btn-ghost">All Posts</button>
         </div>
         <table class="table" id="postsTable">
           <thead>

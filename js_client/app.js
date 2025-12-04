@@ -2,6 +2,7 @@
   const cfg = window.APP_CONFIG;
   const state = { idToken: null, accessToken: null, user: null };
   let showAllPosts = false;
+
   // --- JWT helpers ---
   function decodeJwt(token) {
     const parts = token.split(".");
@@ -132,7 +133,8 @@
       throw new Error(`API ${res.status}: ${t}`);
     }
     const ct = res.headers.get("content-type") || "";
-    return ct.includes("application/json") ? res.json() : res.text();
+    return (ct.includes("application/json") && res.headers.get("content-length") != "0") 
+      ? res.json() : res.text();
   }
 
   // --- Upload URL helper ---
@@ -161,18 +163,20 @@
     tbody.innerHTML = "";
 
     const posts = Array.isArray(data) ? data : (data.items || []);
-
     posts.forEach((p) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${p.title}</td>
         <td>${p.authorUsername}</td>
         <td>${p.status}</td>
-        <td>${fmtDate(p.createdAt)}</td>
-        <td>
-          <button class="btn btn-ghost" data-action="edit" data-id="${p.postId}">Edit</button>
-          <button class="btn danger" data-action="delete" data-id="${p.postId}">Delete</button>
-        </td>`;
+        <td>${fmtDate(p.createdAt)}</td>`;
+      if (!showAllPublished) {
+        tr.innerHTML = tr.innerHTML.concat(`
+          <td>
+            <button class="btn btn-ghost" data-action="edit" data-id="${p.postId}">Edit</button>
+            <button class="btn danger" data-action="delete" data-id="${p.postId}">Delete</button>
+          </td>`);
+      }
       tbody.appendChild(tr);
     });
   }
@@ -212,6 +216,7 @@
     const out = await api(path, { method, body: JSON.stringify(body) });
 
     setStatus("Saved ✅");
+    el("postForm").reset();
     if (out.postId && !id) el("postId").value = out.postId;
     await listPosts();
   }
@@ -271,12 +276,18 @@
       window.location = logoutUrl();
     };
     el("refreshBtn").addEventListener("click", () => {
-      showAllPosts ? listPosts() : listPosts(true);
+      showAllPosts ? listPosts(true) : listPosts();
     });
     el("myPostsBtn").addEventListener("click", () => {
+      showAllPosts = false;
       listPosts();
+      updatePostTableButtons("myPosts");
     });
-    el("allPostsBtn").addEventListener("click", () => listPosts(true));
+    el("allPostsBtn").addEventListener("click", () => {
+      showAllPosts = true;
+      listPosts(true)
+      updatePostTableButtons("allPosts");
+    });
     el("postForm").addEventListener("submit", async (e) => {
       try {
         await maybeUploadHero();
@@ -298,6 +309,21 @@
       if (action === "edit") loadPost(id);
       if (action === "delete") deletePostById(id);
     });
+  }
+
+  function updatePostTableButtons(toggle = "allPosts") {
+    if (!(["myPosts", "allPosts"].includes(toggle))) {
+      return;
+    }
+    const myPostsButton = el("myPostsBtn");
+    const allPostsButton = el("allPostsBtn");
+    if (toggle == "allPosts") {
+      allPostsButton.classList.replace("btn-ghost", "primary");
+      myPostsButton.classList.replace("primary", "btn-ghost");
+    } else {
+      myPostsButton.classList.replace("btn-ghost", "primary");
+      allPostsButton.classList.replace("primary", "btn-ghost");
+    }
   }
 
   // --- Bootstrap ---
