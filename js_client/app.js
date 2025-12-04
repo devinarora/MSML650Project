@@ -1,7 +1,7 @@
 (function () {
   const cfg = window.APP_CONFIG;
   const state = { idToken: null, accessToken: null, user: null };
-
+  let showAllPosts = false;
   // --- JWT helpers ---
   function decodeJwt(token) {
     const parts = token.split(".");
@@ -144,13 +144,15 @@
   }
 
   // --- CRUD operations ---
-  async function listPosts() {
-    const qs = new URLSearchParams();
+  async function listPosts(showAllPublished = false) {
     const author = el("fAuthor").value.trim();
     const tag = el("fTag").value.trim();
 
+    const qs = new URLSearchParams();
+
     if (author) qs.set("author", author);
     if (tag) qs.set("tag", tag);
+    qs.set("all_published", showAllPublished);
 
     const path = "/listall" + (qs.toString() ? "?" + qs.toString() : "");
     const data = await api(path);
@@ -164,6 +166,7 @@
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${p.title}</td>
+        <td>${p.authorUsername}</td>
         <td>${p.status}</td>
         <td>${fmtDate(p.createdAt)}</td>
         <td>
@@ -267,7 +270,13 @@
       state.accessToken = null;
       window.location = logoutUrl();
     };
-    el("refreshBtn").onclick = listPosts;
+    el("refreshBtn").addEventListener("click", () => {
+      showAllPosts ? listPosts() : listPosts(true);
+    });
+    el("myPostsBtn").addEventListener("click", () => {
+      listPosts();
+    });
+    el("allPostsBtn").addEventListener("click", () => listPosts(true));
     el("postForm").addEventListener("submit", async (e) => {
       try {
         await maybeUploadHero();
