@@ -11,7 +11,7 @@
     <header class="topbar">
       <div class="brand">
         <span class="logo">☁️</span>
-        <span>Cloud 650 Admin</span>
+        <span>DATA650 Serverless Publishing Platform</span>
       </div>
       <nav class="nav">
         <button id="loginBtn" class="btn">Login</button>
@@ -20,76 +20,108 @@
     </header>
 
     <main class="container">
-      <section id="status" class="card muted">
-        <strong>Status:</strong> <span id="statusText">Checking session…</span>
+      <div id="status" class="status-bar hidden">
+        <span id="statusText"></span>
+      </div>
+
+      <section id="dashboard-view">
+        <h1>Dashboard</h1>
+        
+        <div class="dashboard-controls">
+          <div class="tabs">
+            <button id="allPostsBtn" class="tab-btn">All Posts</button>
+            <button id="myPostsBtn" class="tab-btn active">My Posts</button>
+          </div>
+          <button id="createPostBtn" class="btn primary">Create New Post</button>
+        </div>
+
+        <div class="card no-padding">
+          <table class="table" id="postsTable">
+            <thead>
+              <tr>
+                <th style="width: 40%;">Title</th>
+                <th style="width: 25%;">Author</th>
+                <th style="width: 20%;">Created</th>
+                <th style="width: 15%; text-align: left;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="postsBody">
+              </tbody>
+          </table>
+        </div>
       </section>
 
-      <section class="card">
-        <h2>Create / Edit Post</h2>
+      <section id="editor-view" class="hidden">
+        <div class="editor-header">
+          <button id="backBtn" class="btn btn-ghost">← Back</button>
+          <h2 id="editorTitle" style="margin:0;">Edit Post</h2>
+        </div>
+
         <form id="postForm">
-          <input style="display: none" id="postId" />
-          <div class="grid">
-            <label>Title
-              <input id="title" required maxlength="140" />
-            </label>
-            <label>Slug
-              <input id="slug" required pattern="[a-z0-9]+" title="lowercase letters, numbers, hyphens" />
-            </label>
-          </div>
-          <label>Tags (comma separated)
-            <input id="tags" placeholder="aws, serverless" />
-          </label>
-          <label>Status
-            <select id="statusSel">
-              <option value="draft">draft</option>
-              <option value="published">published</option>
-            </select>
-          </label>
-          <label>Content
-            <textarea id="content" rows="8" placeholder="Write something awesome…"></textarea>
-          </label>
-          <div class="grid">
-            <label>Hero image
-              <input type="file" id="heroFile" accept="image/*" />
-            </label>
-            <input type="text" id="heroImageKey" placeholder="hero image key (auto-filled)" readonly />
-          </div>
-          <div class="actions">
-            <button type="submit" class="btn primary" id="saveBtn">Save</button>
-            <button type="button" class="btn danger" id="deleteBtn">Delete</button>
-            <button type="reset" class="btn btn-ghost" id="resetBtn">Reset</button>
+          <input type="hidden" id="postId" />
+          <div class="editor-grid">
+            
+            <div class="editor-main">
+              <div class="form-group">
+                <input type="text" id="title" class="input-title" placeholder="Enter post title..." required />
+              </div>
+
+              <div class="form-group content-area">
+                <textarea id="content" class="rich-editor" placeholder="Write your story..."></textarea>
+              </div>
+            </div>
+
+            <div class="editor-sidebar">
+              <div class="sidebar-card">
+                <h3>Post Details</h3>
+                
+                <label>Status
+                  <select id="postStatus">
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                  </select>
+                </label>
+
+                <label>Tags
+                  <input id="tags" placeholder="aws, serverless, webdev" />
+                </label>
+                <label>Author
+                  <input id="authorName" disabled value="You" />
+                </label>
+              </div>
+
+              <div class="sidebar-card">
+                <h3>Hero Image</h3>
+                <div class="hero-preview" id="heroPreview">
+                  <div class="placeholder-img">No Image Selected</div>
+                </div>
+                <input type="text" id="heroImageKey" readonly class="input-small" placeholder="image-key.jpg" />
+                <div class="hero-actions">
+                  <label for="heroFile" class="btn btn-small btn-outline">Change File</label>
+                  <input type="file" id="heroFile" accept="image/*" style="display:none" />
+                  <button type="button" class="btn btn-small btn-danger-outline" id="removeHeroBtn">Remove</button>
+                </div>
+              </div>
+
+              <div class="sidebar-card">
+                <h3>Actions</h3>
+                <div id="viewModeMsg" class="msg-box hidden">
+                    Click on edit on dashboard for making changes.
+                </div>
+
+                <div class="action-grid">
+                  <button type="submit" class="btn primary full-width" id="saveBtn">Submit</button>
+                  <button type="button" class="btn danger full-width" id="deleteBtn">Delete Post</button>
+                </div>
+              </div>
+
+            </div>
           </div>
         </form>
       </section>
 
-      <section class="card">
-        <h2>Posts</h2>
-        <div id="filters" class="grid">
-          <label>Author
-            <input id="fAuthor" placeholder="me by default" />
-          </label>
-          <label>Tag
-            <input id="fTag" placeholder="optional tag filter" />
-          </label>
-        </div>
-        <div class="btn-group pull-left">
-          <button id="refreshBtn" class="btn">Refresh</button>
-          <button id="myPostsBtn" class="btn primary">My Posts</button>
-          <button id="allPostsBtn" class="btn btn-ghost">All Posts</button>
-        </div>
-        <table class="table" id="postsTable">
-          <thead>
-            <tr><th>Title</th><th>Author</th><th>Status</th><th>Created</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="postsBody"></tbody>
-        </table>
-      </section>
     </main>
-
-    <footer class="footer">
-      <small>Built for Cloud 650 • Serverless on AWS</small>
-    </footer>
-
+    
     <script src="config.js"></script>
     <script src="app.js"></script>
   </body>

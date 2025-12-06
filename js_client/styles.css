@@ -1,28 +1,125 @@
+:root {
+  --bg: #f4f6f8;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #ef4444;
+  --border: #e5e7eb;
+}
 
-:root{--bg:#0b1020;--panel:#121a35;--muted:#1a2447;--text:#e7ecff;--sub:#9fb0ff;--accent:#7aa2ff;--accent-2:#5fe1a1;--danger:#ff6b6b}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b1020, #0b1020 40%, #0c1530);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Inter,Helvetica,Arial}
-.container{max-width:1100px;margin:96px auto 64px;padding:0 20px}
-.topbar{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;background:#0b1020cc;backdrop-filter:blur(6px);border-bottom:1px solid #1b254a;padding:14px 20px;z-index:20}
-.brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.2px}
-.logo{font-size:22px}
-.nav .btn{margin-left:10px}
-.card{background:var(--panel);border:1px solid #223062;border-radius:16px;padding:18px;margin:18px 0;box-shadow:0 6px 18px #0007}
-.card h2{margin:6px 0 14px 0}
-.muted{background:var(--muted);border-color:#2a3a77}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.grid label{display:flex;flex-direction:column;gap:6px}
-label{display:flex;flex-direction:column;gap:6px;margin:6px 0}
-input,select,textarea{background:#0e1630;border:1px solid #2a3a77;border-radius:12px;color:var(--text);padding:10px 12px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--accent)}
-.btn{border:1px solid #33467a;border-radius:999px;padding:8px 14px;background:#121c3a;color:var(--text);cursor:pointer;transition:transform .02s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn.primary{background:linear-gradient(135deg,#3b6bff,#7aa2ff);border:0;color:white}
-.btn.danger{background:#3b1320;border-color:#892241;color:#ffd9e0}
-.btn.btn-ghost{background:transparent}
-.actions{display:flex;gap:10px;margin-top:10px}
-.table{width:100%;border-spacing:0;border-collapse:separate}
-.table th,.table td{padding:10px;border-bottom:1px solid #223062}
-.table tr:hover td{background:#0e163099}
-.footer{opacity:.7;text-align:center;margin:24px 0}
-#status{display:flex;gap:8px;align-items:center}
-@media (max-width: 800px){.grid{grid-template-columns:1fr} .topbar{flex-wrap:wrap;gap:8px} .container{margin-top:120px}}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-main); }
+
+/* --- Layout --- */
+.container { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+.hidden { display: none !important; }
+
+/* --- Topbar --- */
+.topbar { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #111827; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100; }
+.brand { font-weight: 700; display: flex; align-items: center; gap: 10px; }
+
+/* --- Buttons --- */
+.btn { 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    padding: 8px 16px; 
+    border-radius: 6px; 
+    border: 1px solid transparent; 
+    cursor: pointer; 
+    font-weight: 500; 
+    font-size: 0.9rem; 
+    transition: all 0.2s; 
+    text-decoration: none;
+    line-height: 1.2;
+}
+
+.btn-small { padding: 4px 12px; font-size: 0.85rem; height: 30px; }
+
+.btn-ghost { background: transparent; color: inherit; }
+.btn.primary { background: var(--primary); color: white; }
+.btn.primary:hover { background: var(--primary-hover); }
+.btn.danger { background: var(--danger); color: white; }
+.btn-outline { border: 1px solid var(--border); background: white; color: var(--text-main); }
+.btn-danger-outline { border: 1px solid var(--danger); color: var(--danger); background: white; }
+
+/* --- Dashboard Styles --- */
+.dashboard-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.tabs { display: flex; gap: 0; background: #e5e7eb; padding: 4px; border-radius: 8px; }
+.tab-btn { background: transparent; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; color: var(--text-muted); font-weight: 500; }
+.tab-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+.card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); overflow: hidden; }
+.no-padding { padding: 0; }
+
+.table { width: 100%; border-collapse: collapse; }
+.table th { background: #f9fafb; text-align: left; padding: 12px 24px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+.table td { padding: 16px 24px; border-bottom: 1px solid var(--border); }
+.table tr:last-child td { border-bottom: none; }
+.post-title-btn { background: none; border: none; color: var(--text-main); font-weight: 600; font-size: 1rem; cursor: pointer; padding: 0; text-align: left; }
+.post-title-btn:hover { color: var(--primary); text-decoration: underline; }
+
+/* --- Editor Styles --- */
+.editor-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+
+/* UPDATE: Removed 'align-items: start' to let columns stretch equally */
+.editor-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 320px; 
+    gap: 24px; 
+    /* align-items: start;  <-- REMOVED THIS */
+}
+
+/* Main Column */
+.editor-main { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); min-height: 600px; display: flex; flex-direction: column; }
+.input-title { font-size: 2.5rem; font-weight: 800; border: none; outline: none; width: 100%; margin-bottom: 10px; color: var(--text-main); }
+.input-slug { font-size: 0.9rem; color: var(--text-muted); background: #f3f4f6; border: none; padding: 4px 8px; border-radius: 4px; width: 100%; font-family: monospace; }
+.sub-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; display: block; }
+.rich-editor { width: 100%; border: none; outline: none; resize: none; margin-top: 20px; flex-grow: 1; font-size: 1.1rem; line-height: 1.6; font-family: serif; color: #374151; min-height: 400px; }
+
+/* Sidebar Column */
+.editor-sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.sidebar-card h3 { margin: 0 0 16px 0; font-size: 1rem; font-weight: 600; }
+.sidebar-card label { display: block; margin-bottom: 12px; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+.sidebar-card input, .sidebar-card select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; margin-top: 4px; font-size: 0.9rem; }
+
+/* Hero Image Specifics */
+.hero-preview { height: 140px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 2px dashed #e5e7eb; }
+.hero-preview img { width: 100%; height: 100%; object-fit: cover; }
+.hero-actions { display: flex; gap: 10px; margin-top: 10px; }
+.input-small { font-size: 0.75rem; padding: 4px; color: #9ca3af; }
+
+/* Message Box for View Mode */
+.msg-box { font-size: 0.9rem; color: var(--text-muted); text-align: center; font-style: italic; background: #f9fafb; padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
+
+.action-grid { display: flex; flex-direction: column; gap: 10px; }
+.full-width { width: 100%; }
+.status-bar { background: #d1fae5; color: #065f46; padding: 10px 20px; border-radius: 6px; margin-bottom: 20px; font-weight: 500; font-size: 0.9rem; text-align: center; }
+
+@media (max-width: 900px) {
+  .editor-grid { grid-template-columns: 1fr; }
+  .editor-main { padding: 20px; }
+}
+
+/* --- Form States (Read Only) --- */
+/* UPDATE: Changed color from light grey (#9ca3af) to dark grey (#374151) */
+input:disabled, 
+textarea:disabled, 
+select:disabled {
+  background-color: #f9fafb !important;
+  color: #374151 !important; /* Darker Text for legibility */
+  cursor: not-allowed;
+  border-color: #f3f4f6;
+}
+
+.rich-editor:disabled { background-color: transparent !important; }
+
+/* UPDATE: Removed opacity to make the title solid black/dark grey */
+.input-title:disabled { 
+    background-color: transparent !important; 
+    opacity: 1; 
+    color: #1f2937 !important; /* Keep title almost black */
+}
